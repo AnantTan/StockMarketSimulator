@@ -1,45 +1,33 @@
+package main;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
+import builders.CompaniesBuilderClass;
 import builders.InvestorBuilderClass;
+import companyAndInvestor.BuyShareListener;
 import companyAndInvestor.CompanyAndInvestor;
-import createDynamicData.CreateDynamicData;
+import simulation.CreateDynamicData;
 
-public class GenerateInvestors extends CreateDynamicData implements CompanyAndInvestor {
+public class Investors extends CreateDynamicData implements CompanyAndInvestor, BuyShareListener {
 
 	private String investorName = "";
 	private UUID invesotrID;
 	private InvestorBuilderClass investor;
-	private ArrayList<InvestorBuilderClass> investorList = new ArrayList<>();
-
-	
-//	@Override
-//	public void run() {
-//		// TODO Auto-generated method stub
-//		//super.run();
-//		System.out.println("t 2 s");
-//		for(int i=0;i<100;i++)
-//		{
-//			System.out.print("t2");
-//		}
-//	
-//		System.out.println("t 2 d");
-//	}
+	public static ArrayList<InvestorBuilderClass> investorList = new ArrayList<>();
 	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		//super.run();
 		System.out.println("tast 2 started");
 		int count = 0;
-		while (count != 100) {
-			name(4, 12);
+		while (count != 20) {
+			//name(4, 12);
 			uniqueID();
-
 			register();
 			count++;
 		}
-		//printInvestors();
+		printInvestors();
 		System.out.println("///////////////////////////////////////task 2 done");
 	}
 
@@ -58,14 +46,39 @@ public class GenerateInvestors extends CreateDynamicData implements CompanyAndIn
 	@Override
 	public void register() {
 
+//		investor = new InvestorBuilderClass.InvestorBuilder().uniqueID(invesotrID).name("An")
+//				.budget(400).build();
+//		
+//		investorList.add(investor);
+//		
+//		investor = new InvestorBuilderClass.InvestorBuilder().uniqueID(invesotrID).name("Ab")
+//				.budget(500).build();
+//		
+//		investorList.add(investor);
+//		
+//		investor = new InvestorBuilderClass.InvestorBuilder().uniqueID(invesotrID).name("Sw")
+//				.budget(600).build();
+//		
+//		investorList.add(investor);
+
 		investor = new InvestorBuilderClass.InvestorBuilder().uniqueID(invesotrID).name(investorName)
 				.budget(getNum(1000, 10000)).build();
+
 		investorList.add(investor);
+
 		//resetValues();
 	}
+	
+	@Override
+	public void update(InvestorBuilderClass investor) {
 
-	private void resetValues() {
-		investorName = "";
+		investor.numberOfsharesBought++;
+	}
+
+	
+	public static ArrayList<InvestorBuilderClass> getListOfInvestors()
+	{
+		return investorList;
 	}
 	
 	private void printInvestors() {
@@ -81,5 +94,4 @@ public class GenerateInvestors extends CreateDynamicData implements CompanyAndIn
 			i++;
 		}
 	}
-
 }

@@ -5,7 +5,8 @@ public class InvestorBuilderClass {
 
 	private UUID uniqueID;
 	private String name;
-	private int budget;
+	public double budget;
+	public int numberOfsharesBought;
 	
 	private InvestorBuilderClass(InvestorBuilder builder)
 	{
@@ -22,7 +23,7 @@ public class InvestorBuilderClass {
 		return name;
 	}
 
-	public int getBudget() {
+	public double getBudget() {
 		return budget;
 	}
 	
@@ -30,7 +31,7 @@ public class InvestorBuilderClass {
 		
 		private UUID uniqueID;
 		private String name;
-		private int budget;
+		private double budget;
 		
 		public InvestorBuilder uniqueID(UUID uniqueID)
 		{
@@ -44,7 +45,7 @@ public class InvestorBuilderClass {
 			return this;
 		}
 		
-		public InvestorBuilder budget(int budget)
+		public InvestorBuilder budget(double budget)
 		{
 			this.budget = budget;
 			return this;
