@@ -1,4 +1,4 @@
-package companyAndInvestor;
+package interfaces;
 
 import builders.CompaniesBuilderClass;
 

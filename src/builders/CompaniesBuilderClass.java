@@ -1,5 +1,7 @@
 package builders;
 
+import java.text.DecimalFormat;
+
 public class CompaniesBuilderClass {
 
 	private String uniqueID;
@@ -7,12 +9,17 @@ public class CompaniesBuilderClass {
 	public int numberOfShares;
 	public double priceOfshares;
 	public int numberOfSharesSold;
+	//public static int totalPriceOfShares;
+	//public static int totalNumberOfShares;
+	private DecimalFormat format;
 
 	private CompaniesBuilderClass(CompanyBuilder companyBuilder) {
 		this.uniqueID = companyBuilder.uniqueID;
 		this.name = companyBuilder.name;
 		this.numberOfShares = companyBuilder.numberOfShares;
 		this.priceOfshares = companyBuilder.priceOfshares;
+	//	this.totalPriceOfShares += companyBuilder.priceOfshares;
+	//	this.totalNumberOfShares += companyBuilder.numberOfShares;
 	}
 
 	public String getUniqueID() {
@@ -27,12 +34,13 @@ public class CompaniesBuilderClass {
 		return numberOfShares;
 	}
 
-	public double getPriceOfshares() {
+	public double getPriceOfShares() {
 		return priceOfshares;
 	}
 
 	public void setPriceOfShares(double newPriceOfShares) {
-		this.priceOfshares = newPriceOfShares;
+		format = new DecimalFormat("0.00");//set to format to 2 places
+		this.priceOfshares = Double.valueOf(format.format(newPriceOfShares));//formatting the price to 2 places
 	}
 
 	public static class CompanyBuilder {

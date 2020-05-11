@@ -7,6 +7,7 @@ import builders.CompaniesBuilderClass;
 import builders.InvestorBuilderClass;
 import main.Companies;
 import main.Investors;
+import main.Trade;
 
 public class TradingDay extends CreateDynamicData {
 
@@ -14,10 +15,13 @@ public class TradingDay extends CreateDynamicData {
 	private InvestorBuilderClass investor;
 	private Investors investors;
 	private Companies companies;
-	private ArrayList<CompaniesBuilderClass> companyList = new ArrayList<>();
-	private ArrayList<InvestorBuilderClass> investorList = new ArrayList<>();
+	private int numberOfSharesSold=0;
+	public static ArrayList<CompaniesBuilderClass> companyList = new ArrayList<>();
+	public static ArrayList<InvestorBuilderClass> investorList = new ArrayList<>();
 	private HashSet<CompaniesBuilderClass> sharesSold = new HashSet<>();
-
+	private HashSet<InvestorBuilderClass> list = new HashSet();
+	private HashSet<CompaniesBuilderClass> list2 = new HashSet();
+	
 	public TradingDay() {
 
 		companyList = Companies.getListOfCompanies();
@@ -28,99 +32,69 @@ public class TradingDay extends CreateDynamicData {
 
 		while (companyList.size() > 0 && investorList.size() > 0) {
 			company = companyList.get(getNum(0, companyList.size() - 1));
-			// System.out.println("sizeee "+investorList.size());
 			investor = investorList.get(getNum(0, investorList.size() - 1));
 
 			trade(company, investor);
 
-			System.out.println();
-			System.out.println("name= " + investor.getName() + " Budget= " + investor.getBudget());
-			System.out.println("name= " + company.getName() + " Shares= " + company.getNumberOfShares());
-			System.out.println("_________________________________________________________");
+//			System.out.println();
+//			System.out.println("name= " + investor.getName() + " Budget= " + investor.getBudget());
+//			System.out.println("name= " + company.getName() + " Price= " + company.getPriceOfShares());
+//			System.out.println("name= " + company.getName() + " Shares= " + company.getNumberOfShares());
+//
+//			System.out.println("_________________________________________________________");
 		}
+		output();
 	}
+
+	private void output() {
+		
+	System.out.println();
+	for (InvestorBuilderClass investor : investorList) {
+		
+		System.out.println("money left "+investor.getBudget());
+	}
+	System.out.println(investorList.size());
+	System.out.println();
+	for (CompaniesBuilderClass company : companyList) {
+		System.out.println("NAme " +company.getName());
+//		if(company.getPriceOfShares()>100)
+//		{
+//			System.out.println("Price "+company.getPriceOfShares());
+//			System.exit(0);
+//		}
+		System.out.println("Price "+company.getPriceOfShares());
+		System.out.println("share number "+company.getNumberOfShares());
+		System.out.println("_______________________________________________");
+	}
+	System.out.println(companyList.size());
+}
 
 	public void trade(CompaniesBuilderClass company, InvestorBuilderClass investor) {
 
-		if (investor.getBudget() < company.getPriceOfshares() || company.getNumberOfShares() == 0) {
+		Trade trade = new Trade(company, investor);
+		if (investor.getBudget() < company.getPriceOfShares() || company.getNumberOfShares() == 0) {
+
+			trade.checkIfInvestorCanBuyAnywhere();
 			return;
+
 		} else {
 			// sell shares
 			// observer
-			sharesSold.add(company);
-			if (sharesSold.size() == 10) {
-				System.out.println("nnfne");
+			sharesSold.add(company);//add a company when any 10 shares are sold
+			//if 10 shares are sold
+			if (numberOfSharesSold == 10) {
+				numberOfSharesSold=0;//reset the counter to count new shares sold
+				//System.out.println("nnfne");
 				companies.reducePriceOfShares(sharesSold);
-				sharesSold.clear();//remove all the companies from the set
+				//System.exit(0);
+				sharesSold.clear();// remove all the companies from the set
 			}
-			investors.update(investor);
+			numberOfSharesSold++;
+			investors.update(investor, company);
 			companies.update(company);
 		}
 
-		investor.budget -= company.getPriceOfshares();
-
-		if (investor.getBudget() <= 0) {
-			// i++;
-			investorList.remove(investor);
-		}
-
-		// company.numberOfShares=0;
-		if (company.numberOfShares <= 0) {
-			// j++;
-			companyList.remove(company);
-		}
-
-		// trade2(company,investor);
-	}
-
-//	public void trade(CompaniesBuilderClass company, InvestorBuilderClass investor) {
-//
-////		investor.budget -= 50;
-////		investor.numberOfshares++;
-////		System.out.println(investor.getName());
-////		System.out.println(investor.getBudget());
-////		System.out.println(investor.getNumberOfShares());
-//		
-//		company.numberOfShares--;
-//		company.numberOfSharesSold++;
-//		System.out.println(company.getName());
-//		System.out.println(company.getNumberOfShares());
-//		System.out.println(company.numberOfSharesSold);
-//	
-//		company = Companies.getListOfCompanies().get(2);
-//		investor = Investors.getListOfInvestors().get(2);
-//
-//		trade2(company,investor);
-//	}
-
-	public void trade2(CompaniesBuilderClass company, InvestorBuilderClass investor) {
-
-//		investor.budget--; 
-//		System.out.println(investor.getName());
-//		System.out.println(investor.getBudget());
-//		System.out.println(investor.getNumberOfShares());
-
-		System.out.println(company.getName());
-		System.out.println(company.getNumberOfShares());
-		System.out.println(company.numberOfSharesSold);
-
-		company = Companies.getListOfCompanies().get(1);
-		investor = Investors.getListOfInvestors().get(1);
-
-		trade3(company, investor);
-
-	}
-
-	public void trade3(CompaniesBuilderClass company, InvestorBuilderClass investor) {
-
-		// investor.budget--;
-//		System.out.println(investor.getName());
-//		System.out.println(investor.getBudget());
-//		System.out.println(investor.getNumberOfShares());
-
-		System.out.println(company.getName());
-		System.out.println(company.getNumberOfShares());
-		System.out.println(company.numberOfSharesSold);
-
+		trade.checkInvestor();
+		trade.checkCompany();
 	}
 }

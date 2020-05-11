@@ -1,4 +1,5 @@
 package builders;
+import java.text.DecimalFormat;
 import java.util.UUID;
 
 public class InvestorBuilderClass {
@@ -7,12 +8,15 @@ public class InvestorBuilderClass {
 	private String name;
 	public double budget;
 	public int numberOfsharesBought;
-	
+	//public static int totalMoney;
+	private DecimalFormat format;
+
 	private InvestorBuilderClass(InvestorBuilder builder)
 	{
 		this.uniqueID = builder.uniqueID;
 		this.name = builder.name;
 		this.budget = builder.budget;
+		//this.totalMoney += builder.budget;
 	}
 
 	public UUID getUniqueID() {
@@ -25,6 +29,12 @@ public class InvestorBuilderClass {
 
 	public double getBudget() {
 		return budget;
+	}
+	
+	public void setBudget(double newBudget)
+	{
+		format = new DecimalFormat("0.00");
+		this.budget = Double.valueOf(format.format(newBudget));
 	}
 	
 	public static class InvestorBuilder{
