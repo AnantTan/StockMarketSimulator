@@ -14,8 +14,12 @@ public class Investors extends CreateDynamicData implements CompanyAndInvestor, 
 	private String investorName = "";
 	private UUID invesotrID;
 	private InvestorBuilderClass investor;
-	public static ArrayList<InvestorBuilderClass> investorList = new ArrayList<>();
+	private static ArrayList<InvestorBuilderClass> investorList = new ArrayList<>();
+	public static ArrayList<InvestorBuilderClass> copyOfInvestorsList = new ArrayList<>();
 	
+	public Investors() {
+	
+	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -30,7 +34,7 @@ public class Investors extends CreateDynamicData implements CompanyAndInvestor, 
 		//printInvestors();
 		System.out.println("///////////////////////////////////////task 2 done");
 	}
-
+	
 	@Override
 	public void uniqueID() {
 
@@ -50,6 +54,7 @@ public class Investors extends CreateDynamicData implements CompanyAndInvestor, 
 				.budget(getNum(1000, 10000)).build();
 
 		investorList.add(investor);
+		copyOfInvestorsList.add(investor);
 	}
 	
 	@Override
@@ -58,9 +63,8 @@ public class Investors extends CreateDynamicData implements CompanyAndInvestor, 
 		investor.setBudget(investor.getBudget()-company.getPriceOfShares());
 		investor.numberOfsharesBought++;
 	}
-
 	
-	public static ArrayList<InvestorBuilderClass> getListOfInvestors()
+	public ArrayList<InvestorBuilderClass> getInvestorList()
 	{
 		return investorList;
 	}

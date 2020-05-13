@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import builders.CompaniesBuilderClass;
+import builders.InvestorBuilderClass;
 import interfaces.CompanyAndInvestor;
 import interfaces.ShareSoldListener;
 import simulation.CreateDynamicData;
@@ -13,8 +14,14 @@ public class Companies extends CreateDynamicData implements CompanyAndInvestor, 
 
 	private String companyName = "", uniqueID = "", orgType = "";
 	private CompaniesBuilderClass company;
-	public static ArrayList<CompaniesBuilderClass> companyList = new ArrayList<>();
+	private static ArrayList<CompaniesBuilderClass> companyList = new ArrayList<>();
+	public static ArrayList<CompaniesBuilderClass> copyOfCompaniesList = new ArrayList<>();
 
+	public Companies() {
+	
+	
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -60,6 +67,7 @@ public class Companies extends CreateDynamicData implements CompanyAndInvestor, 
 				.numbersOfShares(getNum(500, 1000)).priceOfShares(getNum(10, 100)).build();
 
 		companyList.add(company);
+		copyOfCompaniesList.add(company);
 	}
 
 	// double the price of the shares if 10 shares are sold
@@ -68,7 +76,7 @@ public class Companies extends CreateDynamicData implements CompanyAndInvestor, 
 
 		company.numberOfShares--;
 		company.numberOfSharesSold++;
-		if (company.numberOfSharesSold == 10) /*&& !((company.getPriceOfShares()*2) >100))*/ {
+		if (company.numberOfSharesSold == 10){
 			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 111Increase price"+company.getNumberOfShares());
 		company.setPriceOfShares(company.getPriceOfShares() * 2);
 		company.numberOfSharesSold=0;
@@ -77,31 +85,13 @@ public class Companies extends CreateDynamicData implements CompanyAndInvestor, 
 		}
 	}
 	
-	public static ArrayList<CompaniesBuilderClass> thisList = new ArrayList<>();
-	
 	public void reducePriceOfShares(HashSet<CompaniesBuilderClass> companies)
 	{
 		for (CompaniesBuilderClass companyObj : companyList) {
 			
 			//if a company is not present in the set then reduce its price
-			if(companies.add(companyObj))/* && companyObj.getPriceOfShares()>10)*/ {
+			if(companies.add(companyObj)){
 				
-				if(companyObj.getPriceOfShares()>60 && companyObj.getPriceOfShares()<70)
-				{
-					thisList.add(companyObj);
-				}
-				else if(companyObj.getPriceOfShares()>40 && companyObj.getPriceOfShares()<500)
-				{
-					thisList.add(companyObj);
-				}
-				else if(companyObj.getPriceOfShares()>200 && companyObj.getPriceOfShares()<300)
-				{
-					thisList.add(companyObj);
-				}
-				else if(companyObj.getPriceOfShares()>0 && companyObj.getPriceOfShares()<10)
-				{
-					thisList.add(companyObj);
-				}
 				//System.out.println("rrrrrrrrrrrrrrrrrrrr"+companyObj.getPriceOfShares());
 				double reducedPrice = (companyObj.getPriceOfShares()*2)/100;
 				//System.out.println("reduced price "+reducedPrice);
@@ -110,8 +100,9 @@ public class Companies extends CreateDynamicData implements CompanyAndInvestor, 
 			}
 		}
 	}
-
-	public static ArrayList<CompaniesBuilderClass> getListOfCompanies() {
+	
+	public ArrayList<CompaniesBuilderClass> getCompanyList()
+	{
 		return companyList;
 	}
 

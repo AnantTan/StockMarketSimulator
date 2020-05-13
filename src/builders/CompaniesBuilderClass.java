@@ -7,10 +7,9 @@ public class CompaniesBuilderClass {
 	private String uniqueID;
 	private String name;
 	public int numberOfShares;
+	private int numberOfSharesAtTheStart;
 	public double priceOfshares;
 	public int numberOfSharesSold;
-	//public static int totalPriceOfShares;
-	//public static int totalNumberOfShares;
 	private DecimalFormat format;
 
 	private CompaniesBuilderClass(CompanyBuilder companyBuilder) {
@@ -18,8 +17,7 @@ public class CompaniesBuilderClass {
 		this.name = companyBuilder.name;
 		this.numberOfShares = companyBuilder.numberOfShares;
 		this.priceOfshares = companyBuilder.priceOfshares;
-	//	this.totalPriceOfShares += companyBuilder.priceOfshares;
-	//	this.totalNumberOfShares += companyBuilder.numberOfShares;
+		this.numberOfSharesAtTheStart = companyBuilder.numberOfShares;
 	}
 
 	public String getUniqueID() {
@@ -41,6 +39,11 @@ public class CompaniesBuilderClass {
 	public void setPriceOfShares(double newPriceOfShares) {
 		format = new DecimalFormat("0.00");//set to format to 2 places
 		this.priceOfshares = Double.valueOf(format.format(newPriceOfShares));//formatting the price to 2 places
+	}
+	
+	public int getNumberOfSharesAtTheStart()
+	{
+		return numberOfSharesAtTheStart;
 	}
 
 	public static class CompanyBuilder {

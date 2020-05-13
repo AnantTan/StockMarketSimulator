@@ -7,34 +7,15 @@ import simulation.TradingDay;
 
 public class Main extends StockMarketSimulation {
 
-	HashSet<String> dd  =new HashSet<>();
-	
-	private Main()
-	{
-		startTrading();
-//		yes("aa");
-	}
-	
-//	private void yes(String str) {
-//	
-//	if(dd.add(str))
-//	{
-//		System.out.println("great");
-//	}
-//	else
-//		System.out.println("no");
-//	
-//	}
-	
-	public static void main(String[] args) {
+	HashSet<String> dd = new HashSet<>();
 
-		new Main();
+	private Main() {
+		startTrading();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
-	protected void generateData()
-	{
+	protected void generateData() {
 		Thread companies = new Thread(new Companies());
 		companies.start();
 		Thread investors = new Thread(new Investors());
@@ -49,9 +30,23 @@ public class Main extends StockMarketSimulation {
 		companies.stop();
 		investors.stop();
 	}
-	
+
 	@Override
 	protected void startTrade() {
 		new TradingDay();
 	}
+
+	@Override
+	protected void tradingReport() {
+		
+		TradingReport tradingReport = new TradingReport();
+		tradingReport.calculateCapital();
+		tradingReport.investorWithHighestNumberOfShares();
+	}
+
+	public static void main(String[] args) {
+
+		new Main();
+	}
+
 }

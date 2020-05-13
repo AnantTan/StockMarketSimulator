@@ -19,13 +19,13 @@ public class TradingDay extends CreateDynamicData {
 	public static ArrayList<CompaniesBuilderClass> companyList = new ArrayList<>();
 	public static ArrayList<InvestorBuilderClass> investorList = new ArrayList<>();
 	private HashSet<CompaniesBuilderClass> sharesSold = new HashSet<>();
-	private HashSet<InvestorBuilderClass> list = new HashSet();
-	private HashSet<CompaniesBuilderClass> list2 = new HashSet();
 	
 	public TradingDay() {
 
-		companyList = Companies.getListOfCompanies();
-		investorList = Investors.getListOfInvestors();
+		companies = new Companies();
+		investors = new Investors();
+		companyList = companies.getCompanyList();
+		investorList = investors.getInvestorList();
 
 		companies = new Companies();
 		investors = new Investors();
@@ -83,18 +83,28 @@ public class TradingDay extends CreateDynamicData {
 			sharesSold.add(company);//add a company when any 10 shares are sold
 			//if 10 shares are sold
 			if (numberOfSharesSold == 10) {
-				numberOfSharesSold=0;//reset the counter to count new shares sold
-				//System.out.println("nnfne");
-				companies.reducePriceOfShares(sharesSold);
-				//System.exit(0);
-				sharesSold.clear();// remove all the companies from the set
+				updatePrices();
 			}
-			numberOfSharesSold++;
-			investors.update(investor, company);
-			companies.update(company);
+			buyAndSellShares();
 		}
-
+		//proxy to remove an investor or a company
 		trade.checkInvestor();
 		trade.checkCompany();
+	}
+	
+	private void updatePrices()
+	{
+		numberOfSharesSold=0;//reset the counter to count new shares sold
+		//System.out.println("nnfne");
+		companies.reducePriceOfShares(sharesSold);
+		//System.exit(0);
+		sharesSold.clear();// remove all the companies from the set
+	}
+	
+	private void buyAndSellShares()
+	{
+		numberOfSharesSold++;
+		investors.update(investor, company);
+		companies.update(company);
 	}
 }
