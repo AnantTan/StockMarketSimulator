@@ -8,7 +8,6 @@ public class InvestorBuilderClass {
 	private String name;
 	public double budget;
 	public int numberOfsharesBought;
-	//public static int totalMoney;
 	private DecimalFormat format;
 
 	private InvestorBuilderClass(InvestorBuilder builder)
@@ -16,7 +15,6 @@ public class InvestorBuilderClass {
 		this.uniqueID = builder.uniqueID;
 		this.name = builder.name;
 		this.budget = builder.budget;
-		//this.totalMoney += builder.budget;
 	}
 
 	public UUID getUniqueID() {

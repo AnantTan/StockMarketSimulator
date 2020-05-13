@@ -1,11 +1,9 @@
 package main;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 import builders.CompaniesBuilderClass;
-import builders.InvestorBuilderClass;
 import interfaces.CompanyAndInvestor;
 import interfaces.ShareSoldListener;
 import simulation.CreateDynamicData;
@@ -18,15 +16,10 @@ public class Companies extends CreateDynamicData implements CompanyAndInvestor, 
 	public static ArrayList<CompaniesBuilderClass> copyOfCompaniesList = new ArrayList<>();
 
 	public Companies() {
-	
-	
 	}
-	
+
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		// super.run();
-		System.out.println("tast 1 started");
 
 		int count = 0;
 		while (count != 100) {
@@ -44,8 +37,7 @@ public class Companies extends CreateDynamicData implements CompanyAndInvestor, 
 				name(3, 10);
 			}
 		}
-		//printCompanies();
-		System.out.println("///////////////////////////////////////////////////////////task 1 done");
+		// printCompanies();
 	}
 
 	@Override
@@ -76,39 +68,31 @@ public class Companies extends CreateDynamicData implements CompanyAndInvestor, 
 
 		company.numberOfShares--;
 		company.numberOfSharesSold++;
-		if (company.numberOfSharesSold == 10){
-			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 111Increase price"+company.getNumberOfShares());
-		company.setPriceOfShares(company.getPriceOfShares() * 2);
-		company.numberOfSharesSold=0;
-			//System.out.println("*********************************** 111Increase price"+company.getNumberOfShares());
-			//System.exit(0);
+		// if total shares sold from this company = 10 double its price
+		if (company.numberOfSharesSold == 10) {
+			company.setPriceOfShares(company.getPriceOfShares() * 2);
+			company.numberOfSharesSold = 0;
 		}
 	}
-	
-	public void reducePriceOfShares(HashSet<CompaniesBuilderClass> companies)
-	{
+
+	public void reducePriceOfShares(HashSet<CompaniesBuilderClass> companies) {
 		for (CompaniesBuilderClass companyObj : companyList) {
-			
-			//if a company is not present in the set then reduce its price
-			if(companies.add(companyObj)){
-				
-				//System.out.println("rrrrrrrrrrrrrrrrrrrr"+companyObj.getPriceOfShares());
-				double reducedPrice = (companyObj.getPriceOfShares()*2)/100;
-				//System.out.println("reduced price "+reducedPrice);
-				companyObj.setPriceOfShares(companyObj.getPriceOfShares()-reducedPrice);
-				//System.out.println("ttttttttttttttttttttttttt"+companyObj.getPriceOfShares());
+
+			// if a company is not present in the set then reduce its price
+			if (companies.add(companyObj)) {
+				double reducedPrice = (companyObj.getPriceOfShares() * 2) / 100;
+				companyObj.setPriceOfShares(companyObj.getPriceOfShares() - reducedPrice);
 			}
 		}
 	}
-	
-	public ArrayList<CompaniesBuilderClass> getCompanyList()
-	{
+
+	public ArrayList<CompaniesBuilderClass> getCompanyList() {
 		return companyList;
 	}
 
+	@SuppressWarnings("unused")
 	private void printCompanies() {
 
-		DecimalFormat decimalFormat = new DecimalFormat("0.00");
 		int i = 1;
 		for (CompaniesBuilderClass builderClass : companyList) {
 

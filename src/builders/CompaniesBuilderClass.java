@@ -7,7 +7,7 @@ public class CompaniesBuilderClass {
 	private String uniqueID;
 	private String name;
 	public int numberOfShares;
-	private int numberOfSharesAtTheStart;
+	private int numberOfSharesAtTheStart;//use to calculate capital at the end
 	public double priceOfshares;
 	public int numberOfSharesSold;
 	private DecimalFormat format;

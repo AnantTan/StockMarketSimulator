@@ -11,7 +11,6 @@ public abstract class CreateDynamicData extends Thread {
 	private Random random = new Random();
 	int totalAlphabets;// this will create a word using total the random limit given
 	private String companyUniqueID;
-	private String orgType;
 	private HashSet<String> registerationSet = new HashSet<>();
 	private String name="";
 			
@@ -27,15 +26,6 @@ public abstract class CreateDynamicData extends Thread {
 		}
 		return name;
 	}
-
-//	protected boolean checkNameAvailabilityBeofreRegistering(String name) {
-//		if (registerationSet.add(name)) {
-//			return true;
-//			//createUniqueID();
-//		} else
-//			return false;
-//			//createCompanyName();// if name not added find another name
-//	}
 
 	protected String createComapnyUniqueID() {
 

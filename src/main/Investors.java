@@ -22,8 +22,7 @@ public class Investors extends CreateDynamicData implements CompanyAndInvestor, 
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		System.out.println("tast 2 started");
+		
 		int count = 0;
 		while (count != 100) {
 			name(4, 12);
@@ -32,7 +31,6 @@ public class Investors extends CreateDynamicData implements CompanyAndInvestor, 
 			count++;
 		}
 		//printInvestors();
-		System.out.println("///////////////////////////////////////task 2 done");
 	}
 	
 	@Override
@@ -69,6 +67,7 @@ public class Investors extends CreateDynamicData implements CompanyAndInvestor, 
 		return investorList;
 	}
 	
+	@SuppressWarnings("unused")
 	private void printInvestors() {
 		
 		int i = 1;
